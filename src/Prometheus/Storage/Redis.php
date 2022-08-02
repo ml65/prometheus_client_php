@@ -57,7 +57,7 @@ class Redis implements Adapter
      * @param mixed[] $options
      */
     public function __construct(array $options = [])
-    {
+    {   echo "=__construct Redis=<pre>\n";
         // is Sentinels ?
         $this->options = $this->isSentinels(array_merge(self::$defaultOptions, $options));
         $this->redis = new \Redis();
@@ -68,7 +68,7 @@ class Redis implements Adapter
      * @param array $options
      */
     public function isSentinels(array $options = [])
-    {
+    {   echo "=isSentinels=<pre>\n";
         if($options['sentinels']) {
             echo "=1=<pre>"; var_dump($options);
             list($hostname, $port) = $this->discoverMaster($options);
@@ -124,6 +124,7 @@ class Redis implements Adapter
      */
     public static function setDefaultOptions(array $options): void
     {
+        echo "=setDefaultOptions=<pre>"; var_dump($options);
         self::$defaultOptions = array_merge(self::$defaultOptions, $options);
     }
 
