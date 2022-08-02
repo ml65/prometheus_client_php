@@ -237,6 +237,7 @@ LUA
 
         $this->connectToServer();
 
+        
         if ($this->options['password'] !== null) {
             $this->redis->auth($this->options['password']);
         }
@@ -254,7 +255,7 @@ LUA
      * @throws StorageException
      */
     private function connectToServer(): void
-    {
+    { echo "=connectToServer=<pre>\n";
         try {
             $connection_successful = false;
             if ($this->options['persistent_connections'] !== false) {
