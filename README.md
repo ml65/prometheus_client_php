@@ -17,7 +17,7 @@ While the first needs a separate binary running, the second and third just need 
 Add as [Composer](https://getcomposer.org/) dependency:
 
 ```sh
-composer require promphp/prometheus_client_php
+composer require ml65/prometheus_client_php
 ```
 
 ## Usage
