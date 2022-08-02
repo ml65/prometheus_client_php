@@ -65,16 +65,39 @@ class Redis implements Adapter
 
     /**
      * Sentinels  descoverMaster
-     * @param mixed[] $options
+     * @param array $options
      */
     public function isSentinels(array $options = [])
     {
         if($options['sentinels']) {
+            list($hostname, $port) = $this->discoverMaster($options);
+            $options['host'] =  $hostname;
+            $options['port'] = $port;
 
         } else
             return $options;
     }
 
+    /**
+     * Sentinels  descoveryMaster
+     * @param mixed[] $options
+     */
+    public function discoveryMaster(array $options = [])
+    {
+        $connection = new Sentinel();
+        $connection->hostname = $options['host'] ?? null;
+        $connection->masterName = $options['master_name'];
+        if (isset($options['port'])) {
+            $connection->port = $options['port'];
+        }
+        $connection->connectionTimeout = $options['connectionTimeout'] ?? null;
+        $r = $connection->getMaster();
+        if ($r) {
+            return $r;
+        } else {
+            // ???
+        }
+    }
 
     /**
      * @param \Redis $redis
