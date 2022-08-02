@@ -28,6 +28,8 @@ class Redis implements Adapter
         'read_timeout' => '10',
         'persistent_connections' => false,
         'password' => null,
+        'sentinels' => null,      // sentinels flag
+        'master_name' => null,
     ];
 
     /**
@@ -56,9 +58,23 @@ class Redis implements Adapter
      */
     public function __construct(array $options = [])
     {
-        $this->options = array_merge(self::$defaultOptions, $options);
+        // is Sentinels ?
+        $this->options = $this->isSentinels(array_merge(self::$defaultOptions, $options));
         $this->redis = new \Redis();
     }
+
+    /**
+     * Sentinels  descoverMaster
+     * @param mixed[] $options
+     */
+    public function isSentinels(array $options = [])
+    {
+        if($options['sentinels']) {
+
+        } else
+            return $options;
+    }
+
 
     /**
      * @param \Redis $redis
