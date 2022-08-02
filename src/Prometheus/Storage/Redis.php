@@ -70,9 +70,11 @@ class Redis implements Adapter
     public function isSentinels(array $options = [])
     {
         if($options['sentinels']) {
+            echo "=1=<pre>"; var_dump($options);
             list($hostname, $port) = $this->discoverMaster($options);
             $options['host'] =  $hostname;
             $options['port'] = $port;
+            echo "\n\n=2=<pre>"; var_dump($options);
 
         } else
             return $options;
