@@ -46,6 +46,7 @@ class Sentinel
      * @return array|false [host,port] array or false if case of error
      **/
     function getMaster () {
+        echo "=Sentinel getMaster=<br>\n";
         if ($this->open()) {
             return $this->executeCommand('sentinel', [
                 'get-master-addr-by-name',
@@ -60,11 +61,13 @@ class Sentinel
      * Execute redis command on socket and return parsed response
      **/
     function executeCommand ($name, $params, $socket) {
+        echo "=Sentinel executeCommand=<br>\n";
         $params = array_merge(explode(' ', $name), $params);
         $command = '*' . count($params) . "\r\n";
         foreach ($params as $arg) {
             $command .= '$' . mb_strlen($arg, '8bit') . "\r\n" . $arg . "\r\n";
         }
+        echo "=command=",$command,"\n";
 
         fwrite($socket, $command);
 
@@ -78,6 +81,7 @@ class Sentinel
      * @throws Exception on error
      */
     function parseResponse ($command, $socket) {
+        echo "=Sentinel parseResponse=<br>\n";
         if (($line = fgets($socket)) === false) {
             throw new \Exception("Failed to read from socket.\nRedis command was: " . $command);
         }

@@ -85,7 +85,7 @@ class Redis implements Adapter
      * @param mixed[] $options
      */
     public function discoveryMaster(array $options = [])
-    { echo "=dyscoveryMaster=<br>\n"; 
+    { echo "=dyscoveryMaster=<br>\n";
         $connection = new Sentinel();
         $connection->hostname = $options['host'] ?? null;
         $connection->masterName = $options['master_name'];
