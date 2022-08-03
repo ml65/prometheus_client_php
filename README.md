@@ -73,10 +73,10 @@ Change the Redis options (the example shows the defaults):
 ```php
 \Prometheus\Storage\Redis::setDefaultOptions(
     [
-        'host' => '127.0.0.1',
-        'port' => 6379,
+        'host' => '127.0.0.1',  // host redis server or sentinel server
+        'port' => 6379,         // port redis server or sentinel server
         'password' => null,
-        'timeout' => 0.1, // in seconds
+        'timeout' => 0.1,       // in seconds
         'read_timeout' => '10', // in seconds
         'persistent_connections' => false,
         'sentinels' => false,   // support sentinel . Before requesting to redis, a request is made to the sentinel to get 
