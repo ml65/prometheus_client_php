@@ -139,6 +139,7 @@ class CollectorRegistry implements RegistryInterface
      */
     public function getOrRegisterGauge(string $namespace, string $name, string $help, $labels = []): Gauge
     {
+        echo "=getOrRegisterGauge=<pre>\n";
         try {
             $gauge = $this->getGauge($namespace, $name);
         } catch (MetricNotFoundException $e) {

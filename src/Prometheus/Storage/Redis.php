@@ -74,6 +74,7 @@ class Redis implements Adapter
             list($hostname, $port) = $this->discoveryMaster($options);
             $options['host'] =  $hostname;
             $options['port'] = $port;
+            $options['sentinels'] = "false";
             echo "\n\n=2=<pre>"; var_dump($options);
 
         } else
