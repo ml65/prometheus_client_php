@@ -370,7 +370,7 @@ class CollectorRegistry implements RegistryInterface
     }
 
     private function registerDefaultMetrics(): void
-    {   
+    {
         $this->defaultGauges['php_info_gauge'] = $this->getOrRegisterGauge(
             "",
             "php_info",
