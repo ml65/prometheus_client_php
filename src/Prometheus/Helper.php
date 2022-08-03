@@ -13,7 +13,7 @@ class Helper
         \Prometheus\Storage\Redis::setDefaultOptions(
             [
                 'host' => $_ENV['REDIS_SENTINEL_HOST'],
-                'port' => $_ENV['REDIS_SENTINEL_PORT']?$_ENV['REDIS_SENTINEL_PORT']:26379,
+                'port' => $_ENV['REDIS_SENTINEL_PORT'] ??  26379,
                 'password' => $_ENV['REDIS_SENTINEL_PSWD'],
                 'sentinels' => true,
                 'master_name' => $_ENV['REDIS_SENTINEL_USER'],
