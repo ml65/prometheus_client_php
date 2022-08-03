@@ -4,7 +4,7 @@ namespace Prometheus;
 
 class Helper
 {
-    protected static $_instance;
+    protected static $_instance; 
 
     protected $registry;
 
