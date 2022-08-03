@@ -57,7 +57,7 @@ class Redis implements Adapter
      * @param mixed[] $options
      */
     public function __construct(array $options = [])
-    {   echo "=__construct Redis=<pre>\n";
+    {
         // is Sentinels ?
         $this->options = $this->isSentinels(array_merge(self::$defaultOptions, $options));
         $this->redis = new \Redis();
@@ -68,14 +68,13 @@ class Redis implements Adapter
      * @param array $options
      */
     public function isSentinels(array $options = [])
-    {   echo "=isSentinels=<pre>\n";
+    {
         if($options['sentinels']) {
-            echo "=1=<pre>"; var_dump($options);
+
             list($hostname, $port) = $this->discoveryMaster($options);
             $options['host'] =  $hostname;
             $options['port'] = $port;
             $options['sentinels'] = "false";
-            echo "\n\n=2=<pre>"; var_dump($options);
         }
         return $options;
     }
@@ -85,7 +84,7 @@ class Redis implements Adapter
      * @param mixed[] $options
      */
     public function discoveryMaster(array $options = [])
-    { echo "=dyscoveryMaster=<br>\n";
+    {
         $connection = new Sentinel();
         $connection->hostname = $options['host'] ?? null;
         $connection->masterName = $options['master_name'];
@@ -124,8 +123,7 @@ class Redis implements Adapter
      */
     public static function setDefaultOptions(array $options): void
     {
-        echo "=setDefaultOptions=<pre>"; var_dump($options);
-        self::$defaultOptions = array_merge(self::$defaultOptions, $options);
+       self::$defaultOptions = array_merge(self::$defaultOptions, $options);
     }
 
     /**
@@ -255,10 +253,7 @@ LUA
      * @throws StorageException
      */
     private function connectToServer(): void
-    { echo "=connectToServer=<pre>\n";
-        echo " host = ",$this->options['host'],"\n";
-        echo " port = ", $this->options['port'],"\n";
-        echo " timeout = ", $this->options['timeout'],"\n";
+    {
         try {
             $connection_successful = false;
             if ($this->options['persistent_connections'] !== false) {

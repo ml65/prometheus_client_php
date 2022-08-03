@@ -53,7 +53,7 @@ class CollectorRegistry implements RegistryInterface
      * @param bool $registerDefaultMetrics
      */
     public function __construct(Adapter $storageAdapter, bool $registerDefaultMetrics = true)
-    {   echo "=__construct CollectorRegistry=<pre>\n";
+    {   
         $this->storageAdapter = $storageAdapter;
         if ($registerDefaultMetrics) {
             $this->registerDefaultMetrics();
@@ -65,7 +65,6 @@ class CollectorRegistry implements RegistryInterface
      */
     public static function getDefault(): CollectorRegistry
     {
-        echo "=getDefault=<pre>\n";
         return self::$defaultRegistry ?? (self::$defaultRegistry = new self(new Redis()));  /** @phpstan-ignore-line */
     }
 
@@ -139,7 +138,6 @@ class CollectorRegistry implements RegistryInterface
      */
     public function getOrRegisterGauge(string $namespace, string $name, string $help, $labels = []): Gauge
     {
-        echo "=getOrRegisterGauge=<pre>\n";
         try {
             $gauge = $this->getGauge($namespace, $name);
         } catch (MetricNotFoundException $e) {
@@ -372,7 +370,7 @@ class CollectorRegistry implements RegistryInterface
     }
 
     private function registerDefaultMetrics(): void
-    {   echo "=registerDefaultMetrics=<pre>\n";
+    {   
         $this->defaultGauges['php_info_gauge'] = $this->getOrRegisterGauge(
             "",
             "php_info",

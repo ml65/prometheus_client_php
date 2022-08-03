@@ -24,21 +24,17 @@ class Sentinel
      * Connects to redis sentinel
      **/
     protected function open () {
-        echo "=Sentinel open()=<pre>\n=";
         if ($this->_socket !== null) {
             return;
         }
-        echo "= do connection =[".$this->hostname . ':' . $this->port."]<pre>\n=";
         $connection = $this->hostname . ':' . $this->port;
         $this->_socket = @stream_socket_client('tcp://' . $this->hostname . ':' . $this->port, $errorNumber, $errorDescription, $this->connectionTimeout ? $this->connectionTimeout : ini_get("default_socket_timeout"), STREAM_CLIENT_CONNECT);
         if ($this->_socket) {
             if ($this->connectionTimeout !== null) {
                 stream_set_timeout($this->_socket, $timeout = (int) $this->connectionTimeout, (int) (($this->connectionTimeout - $timeout) * 1000000));
             }
-            echo "= do Ok\n=";
             return true;
         } else {
-            echo "= do ERROR!\n=";
             $this->_socket = false;
             return false;
         }
@@ -50,7 +46,6 @@ class Sentinel
      * @return array|false [host,port] array or false if case of error
      **/
     function getMaster () {
-        echo "=Sentinel getMaster=<br>\n";
         if ($this->open()) {
             return $this->executeCommand('sentinel', [
                 'get-master-addr-by-name',
@@ -65,13 +60,11 @@ class Sentinel
      * Execute redis command on socket and return parsed response
      **/
     function executeCommand ($name, $params, $socket) {
-        echo "=Sentinel executeCommand=<br>\n";
         $params = array_merge(explode(' ', $name), $params);
         $command = '*' . count($params) . "\r\n";
         foreach ($params as $arg) {
             $command .= '$' . mb_strlen($arg, '8bit') . "\r\n" . $arg . "\r\n";
         }
-        echo "=command=",$command,"\n";
 
         fwrite($socket, $command);
 
@@ -85,7 +78,6 @@ class Sentinel
      * @throws Exception on error
      */
     function parseResponse ($command, $socket) {
-        echo "=Sentinel parseResponse=<br>\n";
         if (($line = fgets($socket)) === false) {
             throw new \Exception("Failed to read from socket.\nRedis command was: " . $command);
         }
