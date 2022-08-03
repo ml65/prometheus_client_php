@@ -71,7 +71,7 @@ class Redis implements Adapter
     {   echo "=isSentinels=<pre>\n";
         if($options['sentinels']) {
             echo "=1=<pre>"; var_dump($options);
-            list($hostname, $port) = $this->discoverMaster($options);
+            list($hostname, $port) = $this->discoveryMaster($options);
             $options['host'] =  $hostname;
             $options['port'] = $port;
             echo "\n\n=2=<pre>"; var_dump($options);
@@ -85,7 +85,7 @@ class Redis implements Adapter
      * @param mixed[] $options
      */
     public function discoveryMaster(array $options = [])
-    {
+    { echo "=dyscoveryMaster=<br>\n"; 
         $connection = new Sentinel();
         $connection->hostname = $options['host'] ?? null;
         $connection->masterName = $options['master_name'];
@@ -237,7 +237,7 @@ LUA
 
         $this->connectToServer();
 
-        
+
         if ($this->options['password'] !== null) {
             $this->redis->auth($this->options['password']);
         }
