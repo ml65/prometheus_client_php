@@ -40,4 +40,11 @@ class Helper
 
     }
 
+    public function render()
+    {
+        $renderer = new \Prometheus\RenderTextFormat();
+        return $renderer->render($this->registry->getMetricFamilySamples());
+
+    }
+
 }
