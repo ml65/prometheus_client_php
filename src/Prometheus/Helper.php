@@ -30,7 +30,7 @@ class Helper
     {
         if( is_null(self::$_instance))
             self::$_instance = new Helper();
-        return self::$_inctance;
+        return self::$_instance;
     }
 
     public function counterInc($namespace, $name, $help, $labels = [])
