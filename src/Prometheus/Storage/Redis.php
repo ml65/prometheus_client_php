@@ -76,9 +76,8 @@ class Redis implements Adapter
             $options['port'] = $port;
             $options['sentinels'] = "false";
             echo "\n\n=2=<pre>"; var_dump($options);
-
-        } else
-            return $options;
+        }
+        return $options;
     }
 
     /**
