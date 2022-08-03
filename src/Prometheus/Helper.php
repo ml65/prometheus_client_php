@@ -29,7 +29,7 @@ class Helper
     public static function init()
     {
         if( is_null(self::$_instance))
-            self::$instance = new Helper();
+            self::$_instance = new Helper();
         return self::$_inctance;
     }
 
