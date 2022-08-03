@@ -257,8 +257,8 @@ LUA
     private function connectToServer(): void
     { echo "=connectToServer=<pre>\n";
         echo " host=",$this->options['host'],"\n";
-        echo " port=", $this->options['port'],
-        echo " timeout=", $this->options['timeout']
+        echo " port=", $this->options['port'],"\n";
+        echo " timeout=", $this->options['timeout'],"\n";
         try {
             $connection_successful = false;
             if ($this->options['persistent_connections'] !== false) {
