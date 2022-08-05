@@ -5,8 +5,14 @@ namespace Prometheus;
 class Helper
 {
     protected static $_instance;
-
-    protected $registry;
+    // name of All count
+    protected static $countname = 'all_amocrm_request';
+    protected static $counthelp = 'All request to amocrm';
+    // name of count Error 429
+    protected static $errorcount = 'error_429_counter';
+    protected static $errorhelp = 'ERROR 429 counter';
+    protected static $logpath = __DIR__ . '/../../../../../frontend/web/prometheus/logs/';
+    protected static $registry;
 
     function __construct()
     {
@@ -23,24 +29,35 @@ class Helper
                     'persistent_connections' => false
                 ]
             );
-            $this->registry = \Prometheus\CollectorRegistry::getDefault();
+            self::$registry = \Prometheus\CollectorRegistry::getDefault();
         } catch (\Exception $e) {
             //
         }
-
-
     }
-    public static function init()
+
+    public static function init($domain = '', $code = '', $dir = '')
     {
         if( is_null(self::$_instance))
             self::$_instance = new Helper();
+
+        if($domain) {
+            // All request
+            self::$_instance->counterInc('',self::$countname, self::$counthelp);
+            // ERROR 429
+            if($code == 429) {
+                self::$_instance->counterInc('', self::$errorcount, self::$errorhelp);
+                $fc = fopen(self::$logpath . date('Y-m-d') . '_log.log','a');
+                fwrite($fc, date('Y-m-d H:i:s') . ' ' . $domain . ' ' . $dir . "\n");
+                fclose($fc);
+            }
+        }
         return self::$_instance;
     }
 
     public function counterInc($namespace, $name, $help, $labels = [])
     {
         try {
-            $counter = $this->registry->getOrRegisterCounter($namespace, $name, $help, $labels);
+            $counter = self::$registry->getOrRegisterCounter($namespace, $name, $help, $labels);
             $counter->inc();
         } catch (\Exception $e) {
             //
@@ -52,7 +69,7 @@ class Helper
     {
         try {
             $renderer = new \Prometheus\RenderTextFormat();
-            return $renderer->render($this->registry->getMetricFamilySamples());
+            return $renderer->render(self::$registry->getMetricFamilySamples());
         } catch (\Exception $e) {
             return '';
         }
